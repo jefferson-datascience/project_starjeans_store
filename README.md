@@ -16,6 +16,8 @@ As principais concorrentes da empresa Start Jeans! são as americanas H&M e Macy
 
 - Assumimos as matérias-primas de composição das calças Jeans que são mais frequentes em relação a cada concorrente.
 
+- Os dados foram extraídos durante 4 dias na última de semana de Agosto do ano de 2022.
+
 Em relação aos produtos da concorrente H&M:
 
 - esconsideramos as matérias-primas dos bolsos e dos forros dos bolsos das calças Jeans.
