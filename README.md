@@ -39,3 +39,7 @@ Em relação aos produtos da Macys:
 6. Análise Exploratória dos Dados.
 
 7. Respondendo as perguntas dos CEO's.
+
+
+### Para acessar o produto final do projeto acesse o link abaixo
+https://dashboard.heroku.com/apps/starjeans-app
