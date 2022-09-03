@@ -40,6 +40,17 @@ Em relação aos produtos da Macys:
 
 7. Respondendo as perguntas dos CEO's.
 
+## Conclusão
+
+O Objetivo do projeto foi concluído, uma vez que conseguimos responder as perguntas dos CEO's com êxito com os dados que os sites permitiam ser extraídos. Obtivemos as principais matérias-primas que estão nas composições das calças jeans, a mediana e a média dos preços para um primeiro momento. Além disso, obtivemos os tamanhos e cores disponíveis.
+
+Observação: O foco principal desse projeto era um levantamento de informações de mercado e concorrência para o CEO's tomarem uma decisão de negócio.
+
+## Projetos Futuros
+
+Um ótimo projeto futuro seria sobre das questões das entregas desses produtos aos clientes. As ferramentas de extração de dados Beautiful Soup + Selenium seriam muito bem aplicadas para se investigar sobre prazos de entregas, preços de fretes e logística para variadas regiões do estado americano, dessa forma, ajudando na tomada de decisões de negócios dos CEO´s da StarJeans! e com isso gerando insights relevantes para a empresa.
+
+
 
 ### Para acessar o produto final do projeto acesse o link abaixo
 https://dashboard.heroku.com/apps/starjeans-app
