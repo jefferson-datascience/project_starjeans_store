@@ -24,3 +24,18 @@ Em relação aos produtos da Macys:
 
 - Será extraído a composição e informado se o produto possui determinada matéria-prima.
 
+## Estratégia de Resolução
+
+1. Reconhecimento da estrutura das informações dos produtos do WebSite de Calças Jeans masculina da Macys e da H&M.
+
+2. Entendimento do Negócio
+
+3. Coleta de dados de cada produto do site da H&M.
+
+4. Coleta dos daados de cada produto do site da Macys.
+
+5. Limpeza e tratamento dos dados coletados.
+
+6. Análise Exploratória dos Dados.
+
+7. Respondendo as perguntas dos CEO's.
