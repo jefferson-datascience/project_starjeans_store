@@ -1,5 +1,8 @@
 # StarJeans Store!
 
+<img src="https://github.com/jefferson-datascience/project_insight_house_rocket/blob/main/images/house_rocket.jpg" alt="logo" style="zoom: 90%;" />
+
+
 ## Questão de Negócio
 
 Observação: A empresa é fictícia
