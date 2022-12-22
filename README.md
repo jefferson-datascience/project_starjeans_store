@@ -1,5 +1,8 @@
 # StarJeans Store!
 
+<img src="https://github.com/jefferson-datascience/project_starjeans_store/blob/main/app_starjeans/logo_apresentacao.png" alt="logo" style="zoom: 90%;" />
+
+
 ## Questão de Negócio
 
 Observação: A empresa é fictícia
