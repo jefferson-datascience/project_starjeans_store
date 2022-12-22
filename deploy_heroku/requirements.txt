@@ -1,4 +1,4 @@
 pip==22.3.1
-numpy==1.23.2
+numpy==1.21.6
 pandas==1.4.4
 streamlit==1.12.2
