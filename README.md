@@ -60,4 +60,4 @@ Um ótimo projeto futuro seria sobre das questões das entregas desses produtos 
 
 
 ### Para acessar o produto final do projeto acesse o link abaixo
-https://dashboard.heroku.com/apps/starjeans-app
+https://dashboard-starjeans.onrender.com/
