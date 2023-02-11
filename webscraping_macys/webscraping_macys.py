@@ -1,4 +1,5 @@
-# BIBLIOTECAS/PACOTES
+# ============================================= BIBLIOTECAS E PACOTES ====================================================================
+
 
 import logging
 import os
@@ -9,23 +10,25 @@ import selenium
 import sqlite3
 
 
-from bs4 import BeautifulSoup
-from datetime import datetime
-from selenium import webdriver
+from bs4                            import BeautifulSoup
+from datetime                       import datetime
+from selenium                       import webdriver
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import Select
-from sqlalchemy import create_engine
-from time import sleep
+from selenium.webdriver.common.by   import By
+from selenium.webdriver.support.ui  import Select
+from sqlalchemy                     import create_engine
+from time                           import sleep
 
 
-# COLETA DE DADOS
+# ============================================= COLETA DE DADOS ==========================================================================
+
+
 def collect_data(url, headers):
     
-    # Requisição para obter o html da página principal
+    # Extração do html da página principal
     main_page = requests.get(url, headers=headers)
 
-    # Obtenção do html da página principal e intansciado como objeto BeautifulSoup
+    # Intansciado a Extração do html da página principal como BeautifulSoup
     main_page_soup = BeautifulSoup(main_page.text, 'html.parser')
 
     # Extração dos links de cada produto e acomodação em uma lista com a url pronta.
@@ -35,7 +38,9 @@ def collect_data(url, headers):
     return lista_url_produtos
 
 
-# COLETA DE DADOS POR PRODUTO
+# ============================================== COLETA DE DADOS POR PRODUTO =============================================================
+
+
 def collect_data_by_product(lista_url_produtos):
 
     # DataFrame que vai receber os dados
@@ -44,8 +49,10 @@ def collect_data_by_product(lista_url_produtos):
     # Bloco que vai realizar a coleta dos dados.
     for url in lista_url_produtos:
 
+        # LIsta Vazia para Armazenar os dados
         product_details_list = list()
 
+        # EDgeDriver do Selenium para navegar pela página.
         driver = webdriver.Edge()
         driver.get(url)
         sleep(2)
@@ -70,36 +77,36 @@ def collect_data_by_product(lista_url_produtos):
 
                     product_details = list()
 
-                    #Product_id
+                    # Extração do Product_id
                     product_id = product_page.find('p', class_='c-small-font web-id c-margin-top-3v').get_text()
                     product_details.append(product_id)
 
-                    # Product_name
+                    # Extração do Product_name
                     product_name = product_page.find('div', class_='h3').get_text().split('\n')[1]
                     product_details.append(product_name)
 
-                    # price
+                    # Extração do product price
                     price_html = product_page.find_all('div', class_='lowest-sale-price')[0]
                     price = price_html.find('span').get_text().split()[1]
                     product_details.append(price)
 
-                    # color and color_id
+                    # Extração do color and color_id
                     color_html = product_page.find('div', class_='color-label-container c-uppercase')
                     color = color_html.find('span').get_text()
                     product_details.append(color)
 
-                    # size
+                    # Extração do size
                     product_details.append(size)
 
-                    #product_details
+                    # Extração do product_details
                     details = product_page.find('span', class_='processed-details').get_text().split('\n')
                     product_details.append(details)
 
-                    # scrapy datetime
+                    # Extração do scrapy datetime
                     scrapy_datetime = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
                     product_details.append(scrapy_datetime)
 
-                    # lista de detalhes do produto
+                    # Apeend da lista de detalhes do produto
                     product_details_list.append(product_details[:])
 
 
@@ -108,7 +115,7 @@ def collect_data_by_product(lista_url_produtos):
             df_pattern = pd.concat([df_pattern, df_product])
             logger.debug('Product URL: %s', url)
 
-        else: 
+        else:
 
             # Extração do html atual
             page = driver.page_source
@@ -170,7 +177,9 @@ def collect_data_by_product(lista_url_produtos):
     return df_pattern
     
 
-# LIMPEZA DE DADOS
+# ================================================= LIMPEZA DE DADOS =====================================================================
+
+
 def data_clean(df_pattern):
 
     # Removendo espaços vazios das células da coluna 'details' que são compostas por lista.
@@ -264,17 +273,26 @@ def data_clean(df_pattern):
                          'viscose',
                          'scrapy_datetime']].copy()
     
+    # Retorno do DataFrame
     return df_final
 
 
-# INSERÇÃO DOS DADOS NO BANCO DE DADOS
+# ============================================== INSERÇÃO DOS DADOS NO BANCO DE DADOS=====================================================
+
+
 def upload_database(df_clean):
 
+    # Conexão com os Dados
     conexao = create_engine('sqlite:///database_macys.sqlite', echo=False)
 
+    # upload dos dados
     df_clean.to_sql('vitrine', con = conexao, if_exists = 'append', index=False)
 
+    
+#-----------------------------------------------------------------------------------------------------------------------------------------
 
+
+# Inicializador
 if __name__ == '__main__':
     
     # ARQUIVO DE LOGGS

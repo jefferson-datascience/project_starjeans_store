@@ -1,30 +1,36 @@
-# BILIOTECAS/PACOTES
+# ================================================= BILIOTECAS E PACOTES =================================================================
 
-import os
 import logging
-import requests
+import numpy  as np
+import os
 import pandas as pd
-import numpy as np
 import re
-import numpy
+import requests
 import sqlite3
 
-from datetime import datetime
-from bs4 import BeautifulSoup 
+from bs4        import BeautifulSoup 
+from datetime   import datetime
 from sqlalchemy import create_engine
 
-# COLETA DE DADOS
+
+# ================================================ COLETA DE DADOS ======================================================================
+
+
 def coleta_de_dados(url, headers):
 
-    # html vitrine
+    # Extração do HTML da vitrine
     principal_page = requests.get(url, headers=headers)
 
-    # objeto beautiful soup da vitrine
+    # Instanciar o HTML da vitrine como Objeto Beautiful Soup
     principal_soup = BeautifulSoup(principal_page.text, 'html.parser')
 
-    #========================================== DADOS DOS PRODUTOS ==================================================
+    
+    # ---------------------------------------------------- DADOS DOS PRODUTOS -----------------------------------------------------------
+    
+    # Acesso aos produtos
     products = principal_soup.find( 'ul', class_='products-listing small')
 
+    # Listamos os produtos
     product_list = products.find_all( 'article', class_='hm-product-item' )
 
     # Extração dos id's do produto
@@ -41,18 +47,25 @@ def coleta_de_dados(url, headers):
     product_list = products.find_all('span', class_='price regular')
     product_price=[p.get_text() for p in product_list]
 
+    # Armazenamento das informações..
     data = pd.DataFrame([product_id, product_category, product_name, product_price]).T
+    
+    # Renomeando as colunas
     data.columns = ['product_id', 'product_category', 'product_name', 'product_price']
     
+    # Retornando o DataFrame com a coleta dos dados
     return data
 
 
-# COLETA DE DADOS POR PRODUTO
+# ============================================== COLETA DAS CARACTERÍSTICAS DE CADA PRODUTO ==============================================
+
+
 def coleta_de_dados_por_produto(data, headers):
 
-    # dataframe vazio
+    # Dataframe vazio
     df_compositions = pd.DataFrame()
-
+    
+    # Lista vazia auxiliar
     aux = []
 
     # colunas para comportar dados extraídos
@@ -60,82 +73,90 @@ def coleta_de_dados_por_produto(data, headers):
 
     for i in range(len(data)):
 
-    # ---------------------------------------------- obtenção html do produto -----------------------------------------------
+    # ---------------------------------------------- Obtenção do HTML do produto  --------------------------------------------------------
 
         # URL da página do produto
         url_ = 'https://www2.hm.com/en_us/productpage.' + data.loc[i, 'product_id'] + '.html'
+        # Debbuger
         logger.debug('Product: %s', url_)
 
-        # html da pagina do produto
+        # Extração do HTML da Página do Produto
         page = requests.get(url_, headers=headers)
 
-        # objeto Beautiful Soup do html da pagina do produto
+        # Instaciar o HTML da Página do Produto como umobjeto Beautiful Soup
         soup = BeautifulSoup(page.text, 'html.parser')
 
-    # ---------------------------------------------------------- color name -------------------------------------------------
+    # ---------------------------------------------------------- Extração das Cores do Produto -------------------------------------------
 
+        # Acesso as Cores do Produto
         product_list = soup.find_all('a', class_='filter-option miniature active') + soup.find_all('a', class_='filter-option miniature')
 
-        # Aqui realizamos a extração dos dados.
+        # Extração das Cores
         color_name = [p.get('data-color') for p in product_list]
 
-        # Aqui estamos realizando a extração do identificador de cada cor do produto
+        # Extração do identificador de cada cor do produto
         product_id = [p.get('data-articlecode') for p in product_list]
 
+        # Armazenamento das cores
         df_color = pd.DataFrame([product_id, color_name]).T
+        
+        # Renomear as colunas
         df_color.columns = ['product_id', 'color_name']
 
         for j in range(0,len(df_color)):
 
-             # URL da página do produto
+             # URL da página do produto de terminada cor
             url_ = 'https://www2.hm.com/en_us/productpage.' + df_color.loc[j, 'product_id'] + '.html'
             logger.debug('Color: %s', url_)
 
-            # html da pagina do produto
+            # Extração da página do html do produto
             page = requests.get(url_, headers=headers)
 
-            # objeto Beautiful Soup do html da pagina do produto
+            # INstanciar o html do produto com um Objeto Beautiful Soup
             soup = BeautifulSoup(page.text, 'html.parser')
 
-
-            # ---------------------------------- Product Name --------------------------------
-
+            # Extração do nome
             product_name = soup.find_all('hm-product-name', id='js-product-name')[0].find_all('h1')[0].get_text()
 
-            # ---------------------------------- Product Price -------------------------------
+            # Extração do Preço
             product_price = soup.find_all('div', class_='primary-row product-item-price')[0].find_all('span')[0].get_text().split()[0]
-            #--------------------------------------------------- composition ------------------------------------------------
+            
+            
+            # ------------------------- Extração da Composição das Matérias-Primas das Calçascomposition ---------------------------------
 
-            # variável auxiliar para extrair os dados necessários do html
+            
+            # Extração do html que possui os dados necessários
             auxiliar = soup.find_all('hm-product-description', id='js-product-description')
-
-            # Aqui nós extraímos parte do html que tem os dados necessários.
             product_composition_list = [list(filter(None, p.get_text().split('\n'))) for p in auxiliar[0].find_all('div')]
 
-            # Transformar os dados extraídos em um DataFrame e obter a transposta para ter as colunas necessárias.
+            # Armazenamento dos Dados
             df_composition = pd.DataFrame(product_composition_list).T
 
-            # Nomeação das colunas
+            # Nomeação das Colunas
             df_composition.columns = df_composition.iloc[0]
 
             # Eliminar a primeira linha.
             df_composition = df_composition.iloc[1:].fillna(method='ffill')
 
+            # Remoção de strings desnecessárias
             df_composition['Composition'] = df_composition['Composition'].str.replace('Pocket lining:', '', regex = True)
             df_composition['Composition'] = df_composition['Composition'].str.replace('Shell:', '', regex = True)
             df_composition['Composition'] = df_composition['Composition'].str.replace('Pocket:', '', regex = True)
             df_composition['Composition'] = df_composition['Composition'].str.replace('Lining:', '', regex = True)
 
-            # garantia do mesmo números de colunas
+            # Garantia do mesmo números de colunas
             df_composition = pd.concat([df_pattern, df_composition], axis=0)
 
             # renomeando as colunas
             df_composition.columns = ['product_id', 'composition', 'fit', 'product_safety', 'size']
+            
+            # Criando as colunas do product name e product price
             df_composition['product_name'] = product_name
             df_composition['product_price'] = product_price
 
             aux = aux + df_composition.columns.tolist()
-
+            
+            # Junção dos Dados com todas as características e informações de id.
             df_composition = pd.merge(df_composition, df_color, how='left', on='product_id')
 
             # criar um data_base de detalhes dos produtos
@@ -144,61 +165,56 @@ def coleta_de_dados_por_produto(data, headers):
     df_compositions['style_id'] = df_compositions['product_id'].apply(lambda x: x[:-3])
     df_compositions['color_id'] = df_compositions['product_id'].apply(lambda x: x[-3:])
 
-    # scrapy datetime
+    # Criação da coluna para informar a hora da extração dos dados 
     df_compositions['scrapy_datetime'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
     return df_compositions
 
 
-# LIMPEZA DE DADOS
+# ==================================================== LIMPEZA DE DADOS ==================================================================
+
+
 def limpeza_de_dados(data_compositions):
 
     data = data_compositions
 
-    # product name
-    # Vamos padronizar os textos da coluna product name de acordo com a coluna product category deixando todos os caracteres 
-    # minúsculo
+    # Padronização dos textos da coluna product name
     data['product_name'] = data['product_name'].apply( lambda x: x.replace( ' ' , '_' ).lower() )
 
-    # product price
-    # Aqui nós vamos remover o cifrão e devolver novamente para a variável.
+    # Remoção do caracter '$' da coluna product price e mudança da natureza da variável.
     data['product_price'] = data['product_price'].apply(lambda x: x.replace('$', ''))
     data['product_price'] = data['product_price'].astype(float)
 
-
-    # color name
-    # Aqui nós também vamos padronizar. Vamos colocar underline nos espaços e colocar todas as letras em minúsculos.
+    # Padronização dos textos da coluna color name
     data['color_name'] = data['color_name'].apply(lambda x: x.replace(' ','_').lower())
 
-    # fit
-    # Aqui nós também vamos padronizar. Vamos colocar underline nos espaços e colocar todas as letras em minúsculos.
+    # Padronização dos textos da coluna fit
     data['fit'] = data['fit'].apply(lambda x:x.replace(' ', '_').lower())
 
-    # size
-    # Com essa coluna vamos extrair dois dados que vão compor as colunas size number and size model
+    # Criação da coluna size_number a partir da extração das informações da coluna size e mudança da variável
     data['size_number'] = data['size'].apply(lambda x: re.search('(\d{3})cm', x).group(1) if pd.notnull(x) else x )
     data['size_number'] = data['size_number'].astype(float)
 
+    # Criaçaõ da coluna size_model a partir da extração das informações dad coluna size
     data['size_model'] = data['size'].str.extract('(\d+/\\d+)')
 
-    # A coluna Product safety não pe de nosso interesse nesse momento. Desta forma, removemos ela.
+    # Dropagem da coluna Product safety e Size
     data = data.drop(columns=['size', 'product_safety'], axis=1)
 
-    # ===============================  composition ==========================
+    
+    # ===============================  Organização e Limpeza das Matérias-Primas =========================================================
 
-    # Nesse momento vamos organizar a Compositon. Para que isso ocorra, nós vamos quebrá-la com
-    # as composições básicas da calças jeans. Antes disso, vamos verificar todos os
-    # componentes das calças. 
+    
+    # Splitar os dados
     df1 = data['composition'].str.split(',', expand=True).reset_index(drop=True)
 
-    # Uma vez visto do que as calças são compostas, vamos montar as nossas colunas.
-    # cotton | spandex | Polyester 
+    # Montagem do DataFrame com as principais matéria-primas que compõem as calças.
     df_ref = pd.DataFrame(index = np.arange(len(data)), columns=['cotton', 'spandex', 'polyester'] )
 
-    # ----------------------------composition--------------------------------
-
-    # cotton
-
+    
+    # ----------------------------------------- Matéria-Prima: Cotton -------------------------------------------------------------------
+    
+    
     df_cotton_0 = df1.loc[df1[0].str.contains('Cotton', na=True),0]
     df_cotton_0.name = 'cotton'
 
@@ -207,31 +223,31 @@ def limpeza_de_dados(data_compositions):
 
     df_cotton = df_cotton_0.combine_first(df_cotton_1)
 
-    # logo após, fizemos a junção do df_ref com o df_cotton
     df_ref = pd.concat([df_ref, df_cotton], axis=1)
-    # aqui, nós eliminamos a primeira coluna.
+    
     df_ref = df_ref.loc[:, ~df_ref.columns.duplicated(keep='last') ]
 
 
-    #------------------------------polyester-----------------------------------
+    #--------------------------------------------- Matéria-Prima: Polyester --------------------------------------------------------------
 
+    
     df_polyester_0 = df1.loc[df1[0].str.contains('Polyester', na=True),0]
     df_polyester_0.name = 'polyester'
 
     df_polyester_1 = df1.loc[df1[1].str.contains('Polyester', na=True),1]
     df_polyester_1.name = 'polyester'
 
-    # combine
     df_polyester = df_polyester_0.combine_first(df_polyester_1)
 
-    # concat
     df_ref = pd.concat([df_ref, df_polyester], axis=1)
-    # aqui, nós eliminamos a primeira coluna.
+    
+    
     df_ref = df_ref.loc[:, ~df_ref.columns.duplicated(keep='last') ]
     df_ref['polyester'] = df_ref['polyester'].fillna('Polyester 0%')
 
 
-    # -----------------------------spandex------------------------------
+    # ------------------------------------------------- Matéria-Prima: spandex -----------------------------------------------------------
+    
 
     df_spandex_1 = df1.loc[df1[1].str.contains('Spandex', na=True),1]
     df_spandex_1.name = 'spandex'
@@ -247,29 +263,37 @@ def limpeza_de_dados(data_compositions):
     df_ref = df_ref.loc[:, ~df_ref.columns.duplicated(keep='last') ]
     df_ref['spandex'] = df_ref['spandex'].fillna('Spandex 0%')
 
+    
+    # ----------------------------------------------------------------------------------------------------------------------------------
 
+    
     # junção das combinações com o product_id
     df_aux = pd.concat([data['product_id'].reset_index(drop=True), df_ref], axis=1)
-
-    # aqui nós vamos extrair somente o número das colunas cotton, polyeste e spandex.
-    # Para isso, vamos usar a regex.
+    
+    # Extração das POrcentagens de matéria prima sobre cada material.
     df_aux['cotton']    = df_aux['cotton'].apply(lambda x:int(re.search('\d+', x).group(0))/100 if pd.notnull(x) else x ) 
     df_aux['polyester'] = df_aux['polyester'].apply(lambda x:int(re.search('\d+', x).group(0))/100 if pd.notnull(x) else x)
     df_aux['spandex']   = df_aux['spandex'].apply(lambda x:int(re.search('\d+', x).group(0))/100 if pd.notnull(x) else x)
 
+    # Agrupamento dos dados
     df_aux = df_aux.groupby('product_id').max().reset_index()
 
-    # junção 
+    # Merge do DataFrame Principal com o Dataframe das matérias primas.
     data = pd.merge(data, df_aux, on='product_id', how='left')
 
+    # Dropagem da coluna
     data = data.drop(columns=['composition'], axis=1)
 
+    # Dropagem das Colunas
     data = data.drop_duplicates().reset_index(drop=True)
 
+    # Retorno do DataFrame
     return data
 
 
-# INSERÇÃO DOS DADOS NO BANCO DE DADOS
+# ========================================= INSERÇÃO DOS DADOS NO BANCO DE DADOS =========================================================
+
+
 def insercao_dos_dados(data):
 
     data_insert = data[['product_id', 
@@ -286,15 +310,20 @@ def insercao_dos_dados(data):
                         'spandex', 
                         'scrapy_datetime']].copy()
 
-    # Conexão na tabela criada
+    # Conexão criada com o banco de dados sqlite.
     conn = create_engine('sqlite:///database_hm.sqlite', echo=False)
 
+    # Inserção dos dados
     data_insert.to_sql('vitrine', con=conn, if_exists='append', index=False)
 
+    
+# ----------------------------------------------------------------------------------------------------------------------------------------
 
 
+# Inicializador
 if __name__ == '__main__':
     
+    # Arquivo de Log para monitoramento das extrações.
     if not os.path.exists('logs'):
         os.makedirs('logs') 
         
@@ -306,9 +335,9 @@ if __name__ == '__main__':
     
     
     # PARÂMETROS E CONSTANTES
-    
     headers = {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.53 Safari/537.36 Edg/103.0.1264.37'}
 
+    # Url da Página da hm
     url = 'https://www2.hm.com/en_us/men/products/jeans.html'
     
     # COLETA DE DADOS

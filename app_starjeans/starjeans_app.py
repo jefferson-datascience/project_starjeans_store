@@ -159,7 +159,7 @@ def metrics_dataframe_macys(dataframe_macys):
 # side bar
 
 with st.sidebar:
-    #st.image('logo_apresentacao.png')
+    st.image('logo_apresentacao.png')
     page = st.selectbox("Navegue pelo Projeto", ["Apresentação",
                                                  "Vitrine H&M",
                                                  "Vitrine Macys",
