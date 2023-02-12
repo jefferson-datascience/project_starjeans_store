@@ -113,10 +113,12 @@ Aqui temos informações sobre os preços de cada modelo de calça da Macys
 Para uma nova consultoria seria sugerido os seguintes temas de negócio:
 
 i. Estudo da logística de entrega, quais as melhores parcerias com transportadoras e prazo de entrega.
+
 ii. Novos produtos a serem ofertados pela empresa.
+
 iii. Análise periódica dos preços e produtos ofertados pela concorrência.
 
-
+## LINKS
 
 **Acesse o Dashboard da Starjeans aqui:** https://jefferson-datascience-dashboard-starjeans-app-starjeans-kpqcjd.streamlit.app/
 
