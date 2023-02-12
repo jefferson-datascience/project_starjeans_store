@@ -69,11 +69,44 @@ Como resultado de negócio, foi obtido informações relevantes sobre os preço 
 
 ### Análise de preço de mercado das calças da H&M
 
+Aqui temos informações sobre os preços de cada modelo de calça da H&M
 
+**PREÇO MÁXIMO**
 
+<img src="https://github.com/jefferson-datascience/project_starjeans_store/blob/main/images/preco_maximo_calcas_hm.png" alt="logo" style="zoom: 100%"/>
 
+**PREÇO MÍNIMO**
 
-Observação: O foco principal desse projeto era um levantamento de informações de mercado e concorrência para o CEO's tomarem uma decisão de negócio.
+<img src="https://github.com/jefferson-datascience/project_starjeans_store/blob/main/images/preco_minimo_calcas_hm.png" alt="logo" style="zoom: 100%"/>
+
+**PREÇO MÉDIO**
+
+<img src="https://github.com/jefferson-datascience/project_starjeans_store/blob/main/images/preco_medio_calcas_hm.png" alt="logo" style="zoom: 100%"/>
+
+**DISTRIBUIÇÃO DE PREÇOS DAS CALÇAS**
+
+<img src="https://github.com/jefferson-datascience/project_starjeans_store/blob/main/images/distribuicao_precos_calcas_hm.png" alt="logo" style="zoom: 100%"/>
+
+### Análise de preço de mercado das calças da Macys
+
+Aqui temos informações sobre os preços de cada modelo de calça da Macys
+
+**PREÇO MÁXIMO**
+
+<img src="https://github.com/jefferson-datascience/project_starjeans_store/blob/main/images/preco_maximo_calcas_macys.png" alt="logo" style="zoom: 100%"/>
+
+**PREÇO MÍNIMO**
+
+<img src="https://github.com/jefferson-datascience/project_starjeans_store/blob/main/images/preco_minimo_calcas_macys.png" alt="logo" style="zoom: 100%"/>
+
+**PREÇO MÉDIO**
+
+<img src="https://github.com/jefferson-datascience/project_starjeans_store/blob/main/images/preco_medio_calcas_macys.png" alt="logo" style="zoom: 100%"/>
+
+**DISTRIBUIÇÃO DE PREÇOS DAS CALÇAS**
+
+<img src="https://github.com/jefferson-datascience/project_starjeans_store/blob/main/images/distribuicao_precos_calcas_macys.png" alt="logo" style="zoom: 100%"/>
+
 
 ## Projetos Futuros
 
