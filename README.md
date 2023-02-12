@@ -1,55 +1,77 @@
-# StarJeans Store!
-
-<img src="https://github.com/jefferson-datascience/project_starjeans_store/blob/main/app_starjeans/logo_apresentacao.png" alt="logo" style="zoom: 90%;" />
+# Consultoria de Ciência de Dados para StarJeans! Store
 
 
-## Questão de Negócio
+O objetivo do projeto é realizar uma consultoria de para a empresa StarJeans! Store com o objetivo de ajudar na tomada de decisão sobre qual preço estipular, sobre qual modelo de calça fabricar e quais matéria-primas utilizar, baseado nas informações extraídas da concorrência por meio de scripts Python.
 
-Observação: A empresa é fictícia
+## PROBLEMA DE NEGÓCIO
 
-Eduardo e Marcelo são dois brasileiros, amigos e sócios de empreendimento. Depois de vários negócios bem sucedidos, eles estão planejando se lançar no mercado de moda dos USA como um modelo de negócio do tipo E-commerce. A idéia inicial é entrar no mercado com apenas um produto e para um público específico, no caso, o produto seria calças Jeans para o público masculino. O objetivo é manter o custo de operação baixo e escalar a medida que forem conseguindo clientes. Porém, mesmo com o produto de entrada e a audiência definidos, os dois sócios não tem experiência nesse mercado de moda e, portanto, não sabem definir coisas básicas como preço, o tipo de calça e o material para a fabricação de cada peça. Assim, os dois sócios contrataram uma consultoria de um Cientista de Dados para responder as seguintes perguntas:
+Eduardo e Marcelo são dois brasileiros, amigos e sócios de empreendimento. Depois de vários negócios bem sucedidos, eles estão planejando se lançar no mercado de moda dos USA como um modelo de negócio do tipo E-commerce. A idéia inicial é entrar no mercado com apenas um produto e para um público específico, no caso, o produto seria calças Jeans para o público masculino. O objetivo é manter o custo de operação baixo e escalar a medida que forem conseguindo clientes. 
 
-1. Qual o melhor preço de venda para as calças?
-2. Quantos tipos de calças e suas cores para o produto inicial?
-3. Quais as matérias-prima necessárias para confeccionar as calças?
+Porém, mesmo com o produto de entrada e a audiência definidos, os dois sócios não tem experiência nesse mercado de moda e, portanto, não sabem definir coisas básicas como preço, o tipo de calça e o material para a fabricação de cada peça. Assim, os dois sócios contrataram uma consultoria de um Cientista de Dados(no caso, eu) para ajudar nessa empreitada.
 
-As principais concorrentes da empresa Start Jeans! são as americanas H&M e Macys.
+## QUESTÃO DE NEGÓCIO
 
-## Premissas de Negócios
+Nessa consultoria, os CEOs esperam que eu responda as seguintes questões de negócio:
 
-- Assumimos as matérias-primas de composição das calças Jeans que são mais frequentes em relação a cada concorrente.
+**1.** Qual o melhor preço de venda para as calças?
+
+**2.** Quantos tipos de calças e suas cores para o produto inicial?
+
+**3.** Quais as matérias-prima necessárias para confeccionar as calças?
+
+Além dessas questões, foi nos informado que as principais concorrentes da empresa Start Jeans! serão as americanas H&M e Macys.
+
+### Planejamento de Solução
+
+**Qual a solução desse problema?** Com a informação de que as principais concorrentes da StarJeans! Store serão a H&M e a Macys, a soluçao para esse esse problema foi o desenvolvimento de dois scripts em python para a extração de dados das webpages da H&M e Macys com o objetivo de extrair informações relevantes sobre modelo de calças, materiais que compõem as calças, preços e outras informações relevantes.
+
+**Como vai ser a entrega do produto final?** A entrega será da seguinte forma:
+
+i. Será entregue dois arquivo csv com todas as informações sobre os modelos de calças, tamanho, preço, matérias-primas que compõem essas calças, sendo que um arquivo é da H&M e o outro da Macys.
+
+ii. Para agilizar o processo de tomada de decisão e permitir que o CEO acesse essas informações de qualquer lugar, será entregue um dashboard com um resumo de todas essas informações onde estará as informações extraídas desses concorrentes, a análise de preço de mercado das calças Jeans e as questões de negócio respondidas.
+
+## PREMISSAS DE NEGÓCIO
+
+- Considerei as matérias-primas de composição das calças Jeans que são mais frequentes em relação a cada concorrente.
 
 - Os dados foram extraídos durante 4 dias na última de semana de Agosto do ano de 2022.
 
-Em relação aos produtos da concorrente H&M:
+Em relação aos produtos da H&M:
 
-- esconsideramos as matérias-primas dos bolsos e dos forros dos bolsos das calças Jeans.
+- Desconsideramos as matérias-primas dos bolsos e dos forros dos bolsos das calças Jeans.
 
-- Sobre as matérias-primas das calças, será extraído a composição e informado a porcentagem de cada material na constituição de cada produto, sendo que será considerado a maior porcentagem da matéria-prima na composição do produto.
+- Sobre as matérias-primas das calças, será extraído a composição e informado a porcentagem de cada material na constituição de cada produto.
 
 Em relação aos produtos da Macys:
 
 - Será extraído a composição e informado se o produto possui determinada matéria-prima.
 
-## Estratégia de Resolução
+## ESTRATÉGIA DE RESOLUÇÃO
 
-1. Reconhecimento da estrutura das informações dos produtos do WebSite de Calças Jeans masculina da Macys e da H&M.
+**Etapa 01 - Estudo Prévio:** Estudo do HTML das Webpages da H&M e da Macys e escolha das ferramentas de Webscraping.
 
-2. Entendimento do Negócio
+**Etapa 02 - Script H&M:** Desenvolvimento do script de Webscraping para a webpage da H&M que realiza a extração de dados, limpeza e estruturação dos dados e deposita todas essas informações no banco de dados SQLITE.
 
-3. Coleta de dados de cada produto do site da H&M.
+**Etapa 03 - Script Macys :** Desenvolvimento do script de Webscraping para a webpage da Macys que realiza a extração de dados, limpeza e estruturação dos dados e deposita todas essas informações no banco de dados SQLITE.
 
-4. Coleta dos daados de cada produto do site da Macys.
+**Etapa 04 - Automação de Coleta:** Automatização da coleta de dados das Webpages da Macys e da H&M utilizando o agendador de tarefas, coleta de dados realizada por 4 dias.
 
-5. Limpeza e tratamento dos dados coletados.
+**Etapa 05 - Carregamento dos Dados:** Carregamento dos Dados Extraídos e estudo prévio dessas informações.
 
-6. Análise Exploratória dos Dados.
+**Etapa 06 - Análise Exploratória dos Dados:** Análise dos preços máximo, mínimo e médio das calças da H&M e da Macys e Distribuição dos preços das calças.
 
-7. Respondendo as perguntas dos CEO's.
+**Etapa 07 - Dashboard:** Desenvolvimento do Dashboard para a empresa StarJeans! Store.
 
-## Conclusão
+## RESULTADOS DE NEGÓCIO
 
-O Objetivo do projeto foi concluído, uma vez que conseguimos responder as perguntas dos CEO's com êxito com os dados que os sites permitiam ser extraídos. Obtivemos as principais matérias-primas que estão nas composições das calças jeans, a mediana e a média dos preços para um primeiro momento. Além disso, obtivemos os tamanhos e cores disponíveis.
+Como resultado de negócio, foi obtido informações relevantes sobre os preço das concorrentes o que permite que os CEO's tomem a melhor decisão sobre qual preço estipular para as calças que serão produzidas a partir de modelo, cor e tamanho. Segue abaixo os gráficos:
+
+### Análise de preço de mercado das calças da H&M
+
+
+
+
 
 Observação: O foco principal desse projeto era um levantamento de informações de mercado e concorrência para o CEO's tomarem uma decisão de negócio.
 
