@@ -1,5 +1,6 @@
 # Consultoria de Ciência de Dados para StarJeans! Store
 
+<img src="https://github.com/jefferson-datascience/project_starjeans_store/blob/main/images/imagem_fundo_apresentacao.jpg" alt="logo" style="zoom: 100%"/>
 
 O objetivo do projeto é realizar uma consultoria de para a empresa StarJeans! Store com o objetivo de ajudar na tomada de decisão sobre qual preço estipular, sobre qual modelo de calça fabricar e quais matéria-primas utilizar, baseado nas informações extraídas da concorrência por meio de scripts Python.
 
@@ -107,12 +108,23 @@ Aqui temos informações sobre os preços de cada modelo de calça da Macys
 
 <img src="https://github.com/jefferson-datascience/project_starjeans_store/blob/main/images/distribuicao_precos_calcas_macys.png" alt="logo" style="zoom: 100%"/>
 
+## PRÓXIMOS PASSOS 
 
-## Projetos Futuros
+Para uma nova consultoria seria sugerido os seguintes temas de negócio:
 
-Um ótimo projeto futuro seria sobre das questões das entregas desses produtos aos clientes. As ferramentas de extração de dados Beautiful Soup + Selenium seriam muito bem aplicadas para se investigar sobre prazos de entregas, preços de fretes e logística para variadas regiões do estado americano, dessa forma, ajudando na tomada de decisões de negócios dos CEO´s da StarJeans! e com isso gerando insights relevantes para a empresa.
+i. Estudo da logística de entrega, quais as melhores parcerias com transportadoras e prazo de entrega.
+ii. Novos produtos a serem ofertados pela empresa.
+iii. Análise periódica dos preços e produtos ofertados pela concorrência.
 
 
 
-### Para acessar o produto final do projeto acesse o link abaixo
-https://dashboard-starjeans.onrender.com/
+**Acesse o Dashboard da Starjeans aqui:** https://jefferson-datascience-dashboard-starjeans-app-starjeans-kpqcjd.streamlit.app/
+
+**Acesse o script da H&M aqui:** [Script de WebScraping H&M](https://github.com/jefferson-datascience/project_starjeans_store/blob/main/webscraping_hm/webscraping_hm.py)
+
+**Acesse o script da Macys aqui:** [Script de WebScraping H&M](https://github.com/jefferson-datascience/project_starjeans_store/blob/main/webscraping_macys/webscraping_macys.py)
+
+**Acesse o Desenvolvimento e Códigos da Análise Exploratória de Dados da H&M:**[Desenvolvimento e Códigos da EDA da H&M](https://github.com/jefferson-datascience/project_starjeans_store/blob/main/analise_exploratoria_dados_hm.ipynb)
+
+
+**Acesse o Desenvolvimento e Códigos da Análise Exploratória de Dados da H&M:**[Desenvolvimento e Códigos da EDA da H&M](https://github.com/jefferson-datascience/project_starjeans_store/blob/main/analise_exploratoria_dados_macys.ipynb)
