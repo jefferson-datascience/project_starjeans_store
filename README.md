@@ -126,7 +126,8 @@ iii. Análise periódica dos preços e produtos ofertados pela concorrência.
 
 **Acesse o script da Macys aqui:** [Script de WebScraping Macys](https://github.com/jefferson-datascience/project_starjeans_store/blob/main/webscraping_macys/webscraping_macys.py)
 
-**Acesse o Desenvolvimento e Códigos da Análise Exploratória de Dados da H&M:**[Desenvolvimento e Códigos da EDA da H&M](https://github.com/jefferson-datascience/project_starjeans_store/blob/main/analise_exploratoria_dados_hm.ipynb)
+**Acesse o Desenvolvimento e Códigos da Análise Exploratória de Dados da H&M:** [Desenvolvimento e Códigos da EDA da H&M](https://github.com/jefferson-datascience/project_starjeans_store/blob/main/analise_exploratoria_dados_hm.ipynb)
 
+**Acesse o Desenvolvimento e Códigos da Análise Exploratória de Dados da Macys:** [Desenvolvimento e Códigos da EDA da Macys](https://github.com/jefferson-datascience/project_starjeans_store/blob/main/analise_exploratoria_dados_macys.ipynb)
 
-**Acesse o Desenvolvimento e Códigos da Análise Exploratória de Dados da Macys:**[Desenvolvimento e Códigos da EDA da Macys](https://github.com/jefferson-datascience/project_starjeans_store/blob/main/analise_exploratoria_dados_macys.ipynb)
+**Acesse o código do desenvolvimento do Dashboard:** [Código do Dashboard](https://github.com/jefferson-datascience/dashboard_starjeans/blob/main/app_starjeans.py)
