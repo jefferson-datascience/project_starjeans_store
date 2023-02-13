@@ -32,6 +32,14 @@ i. Será entregue dois arquivo csv com todas as informações sobre os modelos d
 
 ii. Para agilizar o processo de tomada de decisão e permitir que o CEO acesse essas informações de qualquer lugar, será entregue um dashboard com um resumo de todas essas informações onde estará as informações extraídas desses concorrentes, a análise de preço de mercado das calças Jeans e as questões de negócio respondidas.
 
+### Ferramentas Utilizadas
+
+- Python 3.9
+- Jupyter Notebook
+- Git
+- Framework Streamlit
+- Selenium + Beautiful Soup para Webscraping
+
 ## PREMISSAS DE NEGÓCIO
 
 - Considerei as matérias-primas de composição das calças Jeans que são mais frequentes em relação a cada concorrente.
